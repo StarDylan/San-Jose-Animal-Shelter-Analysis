@@ -2,21 +2,33 @@ from enum import unique
 import glob
 from collections.abc import Iterable
 import polars as pl
+import pantab
 
 columns_to_drop = [
-    "AnimalName",
     "Crossing",
     "Jurisdiction",
+    "OutcomeSubtype", # All Nulls
+    "LastUpdate",
+
 ]
 columns_to_keep = [
     "AnimalID",
+    "AnimalName",
     "AnimalType",
     "PrimaryColor",
     "SecondaryColor",
     "PrimaryBreed",
     "Sex",
     "DOB",
-
+    "Age",
+    "IntakeDate",
+    "IntakeCondition",
+    "IntakeType",
+    "IntakeSubtype",
+    "IntakeReason",
+    "OutcomeDate",
+    "OutcomeType",
+    "OutcomeCondition",
 ]
 
 # Check DOB vs Age -- Do they agree?
@@ -124,10 +136,38 @@ def preprocess():
 
     df = lf.collect()
 
-    # print_missing_values(df)
+    cols = set(df.columns)
+
+    not_referenced_cols = cols.difference(columns_to_drop).difference(columns_to_keep)
+
+    assert len(not_referenced_cols) == 0, (f"Columns not in REMOVE or KEEP! {list(not_referenced_cols)}")
+
+    common_cols = set(columns_to_drop).intersection(columns_to_keep)
+    assert len(common_cols) == 0, f"{list(common_cols)} are in BOTH REMOVE and KEEP!"
+
+    df = df[columns_to_keep]
+
+    rows_to_remove = {
+        "IntakeType": ["SPAY", "NEUTER"]
+    }
+
+    df =df.filter(
+        (pl.col("IntakeType").is_in(["SPAY", "NEUTER", "DISASTER", "DISPO REQ", "WILDLIFE", "S/N CLINIC"]).not_())
+        &
+        (pl.col("OutcomeType").is_in(["SPAY", "NEUTER", "FOUND ANIM", "LOST EXP", "FOUND EXP", "MISSING", "RTO", "REQ EUTH"]).not_())
+        &
+        (pl.col("AnimalType").eq("CAT"))
+    )
+
+    df  = df.filter(pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_())
+
+    pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
+
+    # # print_missing_values(df)
     # print_unique_values(df)
-    with open("output.txt", "w") as f:
-        _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
+    print(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
+    # with open("output.txt", "w") as f:
+    #     _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
 
 
 if __name__ == "__main__":
