@@ -1,0 +1,1262 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- build 20252.25.1003.1601                               -->
+<workbook original-version='18.1' source-build='2025.2.4 (20252.25.1003.1601)' source-platform='win' version='18.1' xmlns:user='http://www.tableausoftware.com/xml/user'>
+  <document-format-change-manifest>
+    <AnimationOnByDefault />
+    <MarkAnimation />
+    <ObjectModelEncapsulateLegacy />
+    <ObjectModelTableType />
+    <SchemaViewerObjectModel />
+    <SheetIdentifierTracking />
+    <WindowsPersistSimpleIdentifiers />
+  </document-format-change-manifest>
+  <preferences>
+    <preference name='ui.encoding.shelf.height' value='24' />
+    <preference name='ui.shelf.height' value='26' />
+  </preferences>
+  <datasources>
+    <datasource caption='all_data Extract' inline='true' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' version='18.1'>
+      <connection class='federated'>
+        <named-connections>
+          <named-connection caption='all_data' name='hyper.0hyucpd01j2f1a1dh5cfg049g2pi'>
+            <connection authentication='auth-none' author-locale='en_US' class='hyper' dbname='C:/Users/dylan/Documents/Dev/School/San-Jose-Animal-Shelter-Analysis/data/clean/all_data.hyper' default-settings='yes' server='' sslmode='' username='tableau_internal_user' />
+          </named-connection>
+        </named-connections>
+        <relation connection='hyper.0hyucpd01j2f1a1dh5cfg049g2pi' name='records' table='[public].[records]' type='table' />
+        <metadata-records>
+          <metadata-record class='column'>
+            <remote-name>AnimalID</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[AnimalID]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>AnimalID</remote-alias>
+            <ordinal>0</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>20840</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>AnimalName</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[AnimalName]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>AnimalName</remote-alias>
+            <ordinal>1</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>3847</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>AnimalType</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[AnimalType]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>AnimalType</remote-alias>
+            <ordinal>2</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>1</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PrimaryColor</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[PrimaryColor]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>PrimaryColor</remote-alias>
+            <ordinal>3</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>70</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>SecondaryColor</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[SecondaryColor]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>SecondaryColor</remote-alias>
+            <ordinal>4</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>22</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>PrimaryBreed</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[PrimaryBreed]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>PrimaryBreed</remote-alias>
+            <ordinal>5</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>19</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Sex</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[Sex]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>Sex</remote-alias>
+            <ordinal>6</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>5</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>DOB</remote-name>
+            <remote-type>133</remote-type>
+            <local-name>[DOB]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>DOB</remote-alias>
+            <ordinal>7</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <approx-count>2847</approx-count>
+            <contains-null>true</contains-null>
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>Age</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[Age]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>Age</remote-alias>
+            <ordinal>8</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>83</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>IntakeDate</remote-name>
+            <remote-type>133</remote-type>
+            <local-name>[IntakeDate]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>IntakeDate</remote-alias>
+            <ordinal>9</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <approx-count>3027</approx-count>
+            <contains-null>true</contains-null>
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>IntakeCondition</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[IntakeCondition]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>IntakeCondition</remote-alias>
+            <ordinal>10</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>19</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>IntakeType</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[IntakeType]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>IntakeType</remote-alias>
+            <ordinal>11</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>10</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>IntakeSubtype</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[IntakeSubtype]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>IntakeSubtype</remote-alias>
+            <ordinal>12</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>29</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>IntakeReason</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[IntakeReason]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>IntakeReason</remote-alias>
+            <ordinal>13</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>47</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>OutcomeDate</remote-name>
+            <remote-type>133</remote-type>
+            <local-name>[OutcomeDate]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>OutcomeDate</remote-alias>
+            <ordinal>14</ordinal>
+            <local-type>date</local-type>
+            <aggregation>Year</aggregation>
+            <approx-count>3244</approx-count>
+            <contains-null>true</contains-null>
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>OutcomeType</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[OutcomeType]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>OutcomeType</remote-alias>
+            <ordinal>15</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>7</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+          <metadata-record class='column'>
+            <remote-name>OutcomeCondition</remote-name>
+            <remote-type>129</remote-type>
+            <local-name>[OutcomeCondition]</local-name>
+            <parent-name>[records]</parent-name>
+            <remote-alias>OutcomeCondition</remote-alias>
+            <ordinal>16</ordinal>
+            <local-type>string</local-type>
+            <aggregation>Count</aggregation>
+            <approx-count>24</approx-count>
+            <contains-null>true</contains-null>
+            <collation flag='0' name='binary' />
+            <object-id>[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]</object-id>
+          </metadata-record>
+        </metadata-records>
+      </connection>
+      <aliases enabled='yes' />
+      <column caption='Animal ID' datatype='string' name='[AnimalID]' role='dimension' type='nominal' />
+      <column caption='Animal Name' datatype='string' name='[AnimalName]' role='dimension' type='nominal' />
+      <column caption='Animal Type' datatype='string' name='[AnimalType]' role='dimension' type='nominal' />
+      <column caption='TotalRecords' datatype='integer' name='[Calculation_1295629322738946051]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='{ FIXED [AnimalID] : COUNT([IntakeDate]) }' />
+      </column>
+      <column caption='Time in Shelter' datatype='integer' name='[Calculation_2081788932687507456]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='[OutcomeDate] - [IntakeDate]' />
+      </column>
+      <column caption='Intake Condition' datatype='string' name='[IntakeCondition]' role='dimension' type='nominal' />
+      <column caption='Intake Date' datatype='date' name='[IntakeDate]' role='dimension' type='ordinal' />
+      <column caption='Intake Reason' datatype='string' name='[IntakeReason]' role='dimension' type='nominal' />
+      <column caption='Intake Subtype' datatype='string' name='[IntakeSubtype]' role='dimension' type='nominal' />
+      <column caption='Intake Type' datatype='string' name='[IntakeType]' role='dimension' type='nominal' />
+      <column caption='Outcome Condition' datatype='string' name='[OutcomeCondition]' role='dimension' type='nominal' />
+      <column caption='Outcome Date' datatype='date' name='[OutcomeDate]' role='dimension' type='ordinal' />
+      <column caption='Outcome Type' datatype='string' name='[OutcomeType]' role='dimension' type='nominal' />
+      <column caption='Primary Breed' datatype='string' name='[PrimaryBreed]' role='dimension' type='nominal' />
+      <column caption='Primary Color' datatype='string' name='[PrimaryColor]' role='dimension' type='nominal' />
+      <column caption='Secondary Color' datatype='string' name='[SecondaryColor]' role='dimension' type='nominal' />
+      <column aggregation='None' datatype='integer' name='[Time in Shelter (bin)]' role='dimension' type='quantitative'>
+        <calculation class='bin' decimals='0' formula='[Calculation_2081788932687507456]' peg='0' size='1' />
+      </column>
+      <column caption='records' datatype='table' name='[__tableau_internal_object_id__].[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]' role='measure' type='quantitative' />
+      <column-instance column='[IntakeDate]' derivation='Month' name='[mn:IntakeDate:ok]' pivot='key' type='ordinal' />
+      <column-instance column='[IntakeDate]' derivation='Year' name='[yr:IntakeDate:ok]' pivot='key' type='ordinal' />
+      <group hidden='true' name='[Exclusions (MONTH(Intake Date),YEAR(Intake Date))]' name-style='unqualified' user:auto-column='exclude'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[mn:IntakeDate:ok]' />
+          <groupfilter function='level-members' level='[yr:IntakeDate:ok]' />
+        </groupfilter>
+      </group>
+      <layout dim-ordering='alphabetic' measure-ordering='alphabetic' show-structure='true' />
+      <semantic-values>
+        <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
+      </semantic-values>
+      <field-sort-info field-sort-order-type='custom-order'>
+        <field-sort-custom-order field='AnimalID' />
+        <field-sort-custom-order field='AnimalName' />
+        <field-sort-custom-order field='AnimalType' />
+        <field-sort-custom-order field='PrimaryColor' />
+        <field-sort-custom-order field='SecondaryColor' />
+        <field-sort-custom-order field='PrimaryBreed' />
+        <field-sort-custom-order field='Sex' />
+        <field-sort-custom-order field='DOB' />
+        <field-sort-custom-order field='Age' />
+        <field-sort-custom-order field='IntakeDate' />
+        <field-sort-custom-order field='IntakeCondition' />
+        <field-sort-custom-order field='IntakeType' />
+        <field-sort-custom-order field='IntakeSubtype' />
+        <field-sort-custom-order field='IntakeReason' />
+        <field-sort-custom-order field='OutcomeDate' />
+        <field-sort-custom-order field='Calculation_2081788932687507456' />
+        <field-sort-custom-order field='OutcomeType' />
+        <field-sort-custom-order field='OutcomeCondition' />
+        <field-sort-custom-order field='Geometry (generated)' />
+        <field-sort-custom-order field='Latitude (generated)' />
+        <field-sort-custom-order field='Longitude (generated)' />
+        <field-sort-custom-order field=':Measure Names' />
+        <field-sort-custom-order field='Multiple Values' />
+      </field-sort-info>
+      <object-graph>
+        <objects>
+          <object caption='records' id='records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE'>
+            <properties context=''>
+              <relation connection='hyper.0hyucpd01j2f1a1dh5cfg049g2pi' name='records' table='[public].[records]' type='table' />
+            </properties>
+          </object>
+        </objects>
+      </object-graph>
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name='Duplicates'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{5F4A09F9-2DBD-45AE-9C28-6274B60924D4}' />
+    </worksheet>
+    <worksheet name='Intakes of Animals by Month'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='all_data Extract' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t'>
+            <column caption='Intake Date' datatype='date' name='[IntakeDate]' role='dimension' type='ordinal' />
+            <column-instance column='[__tableau_internal_object_id__].[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]' derivation='Count' name='[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]' pivot='key' type='quantitative' />
+            <column caption='records' datatype='table' name='[__tableau_internal_object_id__].[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]' role='measure' type='quantitative' />
+            <column-instance column='[IntakeDate]' derivation='Month' name='[mn:IntakeDate:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[IntakeDate]' derivation='Year' name='[yr:IntakeDate:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Exclusions (MONTH(Intake Date),YEAR(Intake Date))]'>
+            <groupfilter function='except' user:ui-domain='database' user:ui-enumeration='exclusive' user:ui-marker='enumerate'>
+              <groupfilter function='crossjoin'>
+                <groupfilter function='level-members' level='[mn:IntakeDate:ok]' />
+                <groupfilter function='level-members' level='[yr:IntakeDate:ok]' />
+              </groupfilter>
+              <groupfilter function='crossjoin'>
+                <groupfilter function='member' level='[mn:IntakeDate:ok]' member='7' />
+                <groupfilter function='member' level='[yr:IntakeDate:ok]' member='2021' />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Exclusions (MONTH(Intake Date),YEAR(Intake Date))]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='title' class='0' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]' scope='rows' value='Number of Intakes' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='width' value='248' />
+            <format attr='width' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[mn:IntakeDate:ok]' value='138' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='color' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]' palette='tableau-map-temperatur' type='interpolated' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[yr:IntakeDate:ok]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]</rows>
+        <cols>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[mn:IntakeDate:ok]</cols>
+      </table>
+      <simple-id uuid='{028C354D-B371-4A28-A8CE-6C50EF6F517F}' />
+    </worksheet>
+    <worksheet name='Sheet 2'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='all_data Extract' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t'>
+            <column caption='Outcome Condition' datatype='string' name='[OutcomeCondition]' role='dimension' type='nominal' />
+            <column caption='Outcome Type' datatype='string' name='[OutcomeType]' role='dimension' type='nominal' />
+            <column-instance column='[__tableau_internal_object_id__].[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]' derivation='Count' name='[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]' pivot='key' type='quantitative' />
+            <column caption='records' datatype='table' name='[__tableau_internal_object_id__].[records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE]' role='measure' type='quantitative' />
+            <column-instance column='[OutcomeCondition]' derivation='None' name='[none:OutcomeCondition:nk]' pivot='key' type='nominal' />
+            <column-instance column='[OutcomeType]' derivation='None' name='[none:OutcomeType:nk]' pivot='key' type='nominal' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='cell'>
+            <format attr='width' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeCondition:nk]' value='93' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <text column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[__tableau_internal_object_id__].[cnt:records (public.records)_EC6C33D92A62446785F608ABC4DFA8FE:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='true' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk]</rows>
+        <cols>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeCondition:nk]</cols>
+      </table>
+      <simple-id uuid='{578115C7-6E3B-4AC0-8E0E-F2ABB57519A0}' />
+    </worksheet>
+    <worksheet name='Time in Shelter'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='all_data Extract' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t'>
+            <column caption='Time in Shelter' datatype='integer' name='[Calculation_2081788932687507456]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='[OutcomeDate] - [IntakeDate]' />
+            </column>
+            <column caption='Intake Date' datatype='date' name='[IntakeDate]' role='dimension' type='ordinal' />
+            <column caption='Outcome Date' datatype='date' name='[OutcomeDate]' role='dimension' type='ordinal' />
+            <column aggregation='None' datatype='integer' name='[Time in Shelter (bin)]' role='dimension' type='quantitative'>
+              <calculation class='bin' decimals='0' formula='[Calculation_2081788932687507456]' peg='0' size='1' />
+            </column>
+            <column-instance column='[Calculation_2081788932687507456]' derivation='Count' name='[cnt:Calculation_2081788932687507456:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]'>
+            <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='0' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='1' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='2' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='3' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='4' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='5' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='6' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='7' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='8' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='9' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='10' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='11' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='12' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='13' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='14' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='15' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='16' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='17' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='18' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='19' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='20' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='21' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='22' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='23' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='24' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='25' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='26' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='27' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='28' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='29' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='30' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='31' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='32' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='33' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='34' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='35' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='36' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='37' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='38' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='39' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='40' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='41' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='42' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='43' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='44' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='45' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='46' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='47' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='48' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='49' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='50' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='51' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='52' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='53' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='54' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='55' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='56' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='57' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='58' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='59' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='60' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='61' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='62' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='63' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='64' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='65' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='66' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='67' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='68' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='69' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='70' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='71' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='72' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='73' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='74' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='75' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='76' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='77' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='78' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='79' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='80' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='81' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='82' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='83' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='84' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='85' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='86' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='87' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='88' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='89' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='90' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='91' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='92' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='93' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='94' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='95' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='96' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='97' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='98' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='99' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='100' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='101' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='102' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='103' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='104' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='105' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='106' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='107' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='108' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='109' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='110' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='111' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='112' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='113' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='114' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='115' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='116' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='117' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='118' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='119' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='120' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='121' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='122' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='123' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='124' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='125' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='126' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='127' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='128' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='129' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='131' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='132' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='133' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='136' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='137' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='138' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='140' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='141' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='142' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='143' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='144' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='145' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='147' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='148' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='151' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='152' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='157' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='158' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='159' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='165' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='167' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='169' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='171' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='181' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='182' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='185' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='186' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='194' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='202' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='209' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='215' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='216' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='233' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]' field-type='quantitative' scale='log' scope='cols' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-left' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[cnt:Calculation_2081788932687507456:qk]</rows>
+        <cols>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]</cols>
+        <show-full-range>
+          <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Time in Shelter (bin)]</column>
+        </show-full-range>
+      </table>
+      <simple-id uuid='{D5255FAB-B6CB-40FF-8028-3F26CE3926CF}' />
+    </worksheet>
+  </worksheets>
+  <windows source-height='30'>
+    <window class='worksheet' maximized='true' name='Intakes of Animals by Month'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[yr:IntakeDate:ok]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Calculation_665969799826731008]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Calculation_665969799826731009]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_665969799827210242:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_665969799827230723:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_665969799827275780:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeCondition:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:PrimaryColor:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[yr:DOB:ok]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[yr:IntakeDate:ok]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{D3CF1EA9-C826-44C3-BEB4-1E1667418C20}' />
+    </window>
+    <window class='worksheet' name='Sheet 2'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeCondition:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{720731A5-81FB-4E1F-B1D5-283C289FCB35}' />
+    </window>
+    <window class='worksheet' name='Time in Shelter'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:AnimalID:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_2081788932687507456:qk]</field>
+          </color-one-way>
+        </highlight>
+        <floating-toolbar-visibility value='1' />
+        <default-map-tool-selection tool='16' />
+      </viewpoint>
+      <simple-id uuid='{19030B10-A553-4E29-AAAE-52790A8C4BC2}' />
+    </window>
+    <window class='worksheet' name='Duplicates'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:AnimalID:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_1295629322738946051:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeCondition:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeReason:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{9A2C0571-2F30-41AE-8B44-117225016D55}' />
+    </window>
+  </windows>
+  <thumbnails>
+    <thumbnail height='192' name='Duplicates' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAACFUlEQVR4nO3TMQEAIAzAMMC/5yFjRxMFfXpnZg5Eve0A2GQA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQD
+      kGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBp
+      BiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA
+      0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDN
+      AKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxA
+      mgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKR9Y+0F
+      fBUOM1sAAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='Intakes of Animals by Month' width='192'>
+      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
+      t5euhcWF8P8BqAc/h30sAm4AAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='184' name='Sheet 2' width='192'>
+      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
+      QRv/D3w7mHCuQNHhAAAAAElFTkSuQmCC
+    </thumbnail>
+    <thumbnail height='192' name='Time in Shelter' width='192'>
+      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
+      7T+RncUFYAWJ5wAAAABJRU5ErkJggg==
+    </thumbnail>
+  </thumbnails>
+</workbook>

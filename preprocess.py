@@ -3,6 +3,7 @@ import glob
 from collections.abc import Iterable
 import polars as pl
 import pantab
+from datetime import datetime, timedelta
 
 columns_to_drop = [
     "Crossing",
@@ -157,15 +158,17 @@ def preprocess():
         (pl.col("OutcomeType").is_in(["SPAY", "NEUTER", "FOUND ANIM", "LOST EXP", "FOUND EXP", "MISSING", "RTO", "REQ EUTH"]).not_())
         &
         (pl.col("AnimalType").eq("CAT"))
+        # & (pl.col("IntakeDate") < pl.datetime(2025, 1, 1))
+        & (pl.col("OutcomeDate") < datetime.now() + timedelta(days=1)) # Anything in the future is wrong
     )
 
-    df  = df.filter(pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_())
+    # df  = df.filter(pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_())
 
-    pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
+    # pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
 
-    # # print_missing_values(df)
-    # print_unique_values(df)
-    print(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
+    # print_missing_values(df)
+    print_unique_values(df)
+    # print(categorical_conditionals_text(df, ["OutcomeCondition", "OutcomeType"], True))
     # with open("output.txt", "w") as f:
     #     _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
 
