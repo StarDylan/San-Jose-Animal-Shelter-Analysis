@@ -60,15 +60,31 @@ We can see for all the years, that May seems to be when the most cats are
 being intaken by the shelter, which lines up pretty well with the kitten
 season.
 
+Another interesting piece of info is the shape of time in shelter, with most cats spending very little time
+in the shelter. 50% of cats spend 4 days or less in the shelter.
+
+![](./imgs/Time%20in%20Shelter.svg)
+
+But when we break it out by common intakes + all outcomes, we see that cats that come from different
+backgrounds spend different amoounts of time in the shelter.
+
+![](./imgs/Time%20in%20Shelter%20by%20Outcome%20+%20Intake.svg)
+
+We see that cats that come from a foster family spend much shorter time before adoption, most often
+0 days. We also see that they much more likely to get placed in a rescue (non-profit vs. shelters which are government funded, they can also be selective about what animals they bring in) rather than transfered.
+They are also almost never euthanized.
+
+While cats that are strays are much more often euthanized, transfered, or returned to the field than foster cats. We also see that transfers take at least a few days, while rescues are much more instant.
+
 ## Open Questions
 
 Some questions that still remain include data integrity:
 
 - DOB vs Age -- Do they agree?
-- Any Male/Neutered Pregnant?
+- Any cats mistakeningly labeled Male/Neutered that are also pregnant?
 
 As well as the semantics of some of the codes:
 
 - EUTH Req? Do they always result in EUTH? / Same with DISPO REQ
 
-I also need to work out what codes are sufficiently similar for color, outcome, and condition.
+I also need to work out what codes are sufficiently similar for color, outcome, and condition. Because currently there are a lot of codes that seem to be redundant or just not useful.

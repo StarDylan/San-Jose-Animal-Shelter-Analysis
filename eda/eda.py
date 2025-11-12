@@ -126,10 +126,23 @@ def categorical_conditionals_text(
 
     return "\n".join(lines)
 
+def percentiles_time_in_shelter(df: pl.DataFrame, percentiles: list[float]) -> pl.DataFrame:
+    df = df.with_columns(
+        (pl.col("OutcomeDate") - pl.col("IntakeDate")).dt.total_days().alias("TimeInShelterDays")
+    )
+
+    percentile_exprs = [
+        pl.col("TimeInShelterDays").quantile(q).alias(f"P{int(q * 100)}") for q in percentiles
+    ]
+
+    result = df.select(percentile_exprs)
+
+    return result
+
 
 def preprocess():
     lfs: list[pl.LazyFrame] = []
-    for file in glob.glob("../data/raw/*.csv"):
+    for file in glob.glob("data/raw/*.csv"):
         lf = pl.scan_csv(file, try_parse_dates=True)
         lfs.append(lf)
 
@@ -167,7 +180,8 @@ def preprocess():
     # pantab.frame_to_hyper(df, "../data/clean/all_data.hyper", table="records")
 
     # print_missing_values(df)
-    print_unique_values(df)
+    # print_unique_values(df)
+    print(percentiles_time_in_shelter(df, [0.25, 0.5, 0.75, 0.9, 0.95, 0.99]))
     # print(categorical_conditionals_text(df, ["OutcomeCondition", "OutcomeType"], True))
     # with open("output.txt", "w") as f:
     #     _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))

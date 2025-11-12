@@ -335,33 +335,8 @@
       </object-graph>
     </datasource>
   </datasources>
+  <actions brushing-enabled='false' />
   <worksheets>
-    <worksheet name='Duplicates'>
-      <table>
-        <view>
-          <datasources />
-          <aggregation value='true' />
-        </view>
-        <style />
-        <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-            <style>
-              <style-rule element='mark'>
-                <format attr='mark-labels-cull' value='true' />
-                <format attr='mark-labels-show' value='false' />
-              </style-rule>
-            </style>
-          </pane>
-        </panes>
-        <rows />
-        <cols />
-      </table>
-      <simple-id uuid='{5F4A09F9-2DBD-45AE-9C28-6274B60924D4}' />
-    </worksheet>
     <worksheet name='Intakes of Animals by Month'>
       <table>
         <view>
@@ -668,11 +643,7 @@
           </slices>
           <aggregation value='true' />
         </view>
-        <style>
-          <style-rule element='axis'>
-            <encoding attr='space' class='0' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]' field-type='quantitative' scale='log' scope='cols' type='space' />
-          </style-rule>
-        </style>
+        <style />
         <panes>
           <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
             <view>
@@ -696,9 +667,460 @@
       </table>
       <simple-id uuid='{D5255FAB-B6CB-40FF-8028-3F26CE3926CF}' />
     </worksheet>
+    <worksheet name='Time in Shelter by Outcome'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='all_data Extract' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t'>
+            <column caption='Time in Shelter' datatype='integer' name='[Calculation_2081788932687507456]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='[OutcomeDate] - [IntakeDate]' />
+            </column>
+            <column caption='Intake Date' datatype='date' name='[IntakeDate]' role='dimension' type='ordinal' />
+            <column caption='Outcome Date' datatype='date' name='[OutcomeDate]' role='dimension' type='ordinal' />
+            <column caption='Outcome Type' datatype='string' name='[OutcomeType]' role='dimension' type='nominal' />
+            <column aggregation='None' datatype='integer' name='[Time in Shelter (bin)]' role='dimension' type='quantitative'>
+              <calculation class='bin' decimals='0' formula='[Calculation_2081788932687507456]' peg='0' size='1' />
+            </column>
+            <column-instance column='[Calculation_2081788932687507456]' derivation='Count' name='[cnt:Calculation_2081788932687507456:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[OutcomeType]' derivation='None' name='[none:OutcomeType:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]'>
+            <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='0' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='1' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='2' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='3' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='4' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='5' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='6' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='7' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='8' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='9' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='10' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='11' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='12' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='13' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='14' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='15' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='16' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='17' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='18' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='19' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='20' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='21' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='22' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='23' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='24' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='25' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='26' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='27' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='28' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='29' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='30' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='31' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='32' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='33' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='34' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='35' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='36' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='37' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='38' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='39' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='40' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='41' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='42' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='43' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='44' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='45' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='46' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='47' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='48' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='49' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='50' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='51' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='52' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='53' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='54' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='55' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='56' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='57' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='58' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='59' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='60' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='61' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='62' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='63' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='64' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='65' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='66' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='67' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='68' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='69' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='70' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='71' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='72' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='73' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='74' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='75' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='76' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='77' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='78' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='79' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='80' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='81' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='82' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='83' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='84' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='85' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='86' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='87' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='88' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='89' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='90' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='91' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='92' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='93' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='94' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='95' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='96' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='97' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='98' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='99' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='100' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='101' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='102' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='103' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='104' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='105' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='106' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='107' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='108' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='109' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='110' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='111' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='112' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='113' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='114' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='115' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='116' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='117' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='118' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='119' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='120' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='121' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='122' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='123' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='124' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='125' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='126' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='127' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='128' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='129' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='131' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='132' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='133' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='136' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='137' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='138' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='140' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='141' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='142' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='143' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='144' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='145' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='147' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='148' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='151' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='152' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='157' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='158' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='159' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='165' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='167' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='169' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='171' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='181' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='182' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='185' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='186' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='194' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='202' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='209' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='215' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='216' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='233' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]' field-type='quantitative' max='100' min='0.0' range-type='fixed' scope='cols' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-left' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>([federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk] * [federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[cnt:Calculation_2081788932687507456:qk])</rows>
+        <cols>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]</cols>
+        <show-full-range>
+          <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Time in Shelter (bin)]</column>
+        </show-full-range>
+      </table>
+      <simple-id uuid='{A7C2968E-F1BD-4642-BBFC-4A01FB3B15AF}' />
+    </worksheet>
+    <worksheet name='Time in Shelter by Outcome + Intake'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='all_data Extract' name='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t'>
+            <column caption='Time in Shelter' datatype='integer' name='[Calculation_2081788932687507456]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='[OutcomeDate] - [IntakeDate]' />
+            </column>
+            <column caption='Intake Date' datatype='date' name='[IntakeDate]' role='dimension' type='ordinal' />
+            <column caption='Intake Type' datatype='string' name='[IntakeType]' role='dimension' type='nominal' />
+            <column caption='Outcome Date' datatype='date' name='[OutcomeDate]' role='dimension' type='ordinal' />
+            <column caption='Outcome Type' datatype='string' name='[OutcomeType]' role='dimension' type='nominal' />
+            <column aggregation='None' datatype='integer' name='[Time in Shelter (bin)]' role='dimension' type='quantitative'>
+              <calculation class='bin' decimals='0' formula='[Calculation_2081788932687507456]' peg='0' size='1' />
+            </column>
+            <column-instance column='[Calculation_2081788932687507456]' derivation='Count' name='[cnt:Calculation_2081788932687507456:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[IntakeType]' derivation='None' name='[none:IntakeType:nk]' pivot='key' type='nominal' />
+            <column-instance column='[OutcomeType]' derivation='None' name='[none:OutcomeType:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Time in Shelter (bin)]' derivation='None' name='[none:Time in Shelter (bin):qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]'>
+            <groupfilter function='union' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:IntakeType:nk]' member='&quot;FOSTER&quot;' />
+              <groupfilter function='member' level='[none:IntakeType:nk]' member='&quot;STRAY&quot;' />
+            </groupfilter>
+          </filter>
+          <filter class='categorical' column='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]'>
+            <groupfilter function='union' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='0' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='1' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='2' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='3' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='4' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='5' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='6' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='7' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='8' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='9' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='10' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='11' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='12' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='13' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='14' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='15' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='16' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='17' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='18' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='19' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='20' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='21' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='22' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='23' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='24' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='25' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='26' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='27' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='28' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='29' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='30' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='31' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='32' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='33' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='34' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='35' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='36' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='37' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='38' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='39' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='40' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='41' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='42' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='43' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='44' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='45' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='46' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='47' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='48' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='49' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='50' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='51' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='52' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='53' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='54' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='55' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='56' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='57' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='58' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='59' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='60' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='61' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='62' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='63' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='64' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='65' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='66' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='67' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='68' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='69' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='70' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='71' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='72' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='73' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='74' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='75' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='76' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='77' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='78' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='79' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='80' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='81' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='82' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='83' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='84' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='85' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='86' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='87' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='88' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='89' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='90' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='91' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='92' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='93' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='94' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='95' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='96' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='97' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='98' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='99' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='100' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='101' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='102' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='103' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='104' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='105' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='106' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='107' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='108' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='109' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='110' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='111' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='112' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='113' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='114' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='115' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='116' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='117' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='118' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='119' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='120' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='121' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='122' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='123' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='124' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='125' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='126' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='127' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='128' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='129' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='131' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='132' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='133' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='136' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='137' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='138' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='140' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='141' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='142' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='143' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='144' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='145' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='147' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='148' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='151' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='152' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='157' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='158' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='159' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='165' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='167' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='169' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='171' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='181' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='182' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='185' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='186' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='194' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='202' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='209' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='215' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='216' />
+              <groupfilter function='member' level='[none:Time in Shelter (bin):ok]' member='233' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):ok]</column>
+            <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <encoding attr='space' class='0' field='[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk]' field-type='quantitative' max='100' min='0.0' range-type='fixed' scope='cols' type='space' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane id='1' selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <mark-sizing custom-mark-size-in-axis-units='1.0' mark-alignment='mark-alignment-left' mark-sizing-setting='marks-scaling-on' use-custom-mark-size='false' />
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-cull' value='true' />
+                <format attr='mark-labels-show' value='false' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>([federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk] * [federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[cnt:Calculation_2081788932687507456:qk])</rows>
+        <cols>([federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk] * [federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Time in Shelter (bin):qk])</cols>
+        <show-full-range>
+          <column>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[Time in Shelter (bin)]</column>
+        </show-full-range>
+      </table>
+      <simple-id uuid='{4B189366-F446-40EF-8EDB-1988B1699970}' />
+    </worksheet>
   </worksheets>
   <windows source-height='30'>
-    <window class='worksheet' maximized='true' name='Intakes of Animals by Month'>
+    <window class='worksheet' name='Intakes of Animals by Month'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -803,12 +1225,12 @@
             <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_2081788932687507456:qk]</field>
           </color-one-way>
         </highlight>
-        <floating-toolbar-visibility value='1' />
+        <floating-toolbar-visibility value='2' />
         <default-map-tool-selection tool='16' />
       </viewpoint>
       <simple-id uuid='{19030B10-A553-4E29-AAAE-52790A8C4BC2}' />
     </window>
-    <window class='worksheet' name='Duplicates'>
+    <window class='worksheet' maximized='true' name='Time in Shelter by Outcome'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -833,231 +1255,252 @@
         <highlight>
           <color-one-way>
             <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:AnimalID:nk]</field>
-            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_1295629322738946051:qk]</field>
-            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeCondition:nk]</field>
-            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeReason:nk]</field>
-            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_2081788932687507456:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk]</field>
           </color-one-way>
         </highlight>
+        <floating-toolbar-visibility value='1' />
+        <default-map-tool-selection tool='2' />
       </viewpoint>
-      <simple-id uuid='{9A2C0571-2F30-41AE-8B44-117225016D55}' />
+      <simple-id uuid='{82D0A913-9CE3-4D61-B487-CB355C20C9FF}' />
+    </window>
+    <window class='worksheet' name='Time in Shelter by Outcome + Intake'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:AnimalID:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:Calculation_2081788932687507456:qk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:IntakeType:nk]</field>
+            <field>[federated.0qcbu3n1nf2wyz1gqwnwj0x26e7t].[none:OutcomeType:nk]</field>
+          </color-one-way>
+        </highlight>
+        <floating-toolbar-visibility value='1' />
+        <default-map-tool-selection tool='2' />
+      </viewpoint>
+      <simple-id uuid='{2AE46265-D726-4429-8398-2FC0CA91396B}' />
     </window>
   </windows>
   <thumbnails>
-    <thumbnail height='192' name='Duplicates' width='192'>
-      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
-      AAACFUlEQVR4nO3TMQEAIAzAMMC/5yFjRxMFfXpnZg5Eve0A2GQA0gxAmgFIMwBpBiDNAKQZ
-      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
-      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQD
-      kGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBp
-      BiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA
-      0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDN
-      AKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxA
-      mgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZ
-      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
-      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKR9Y+0F
-      fBUOM1sAAAAASUVORK5CYII=
-    </thumbnail>
     <thumbnail height='192' name='Intakes of Animals by Month' width='192'>
       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
-      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
-      t5euhcWF8P8BqAc/h30sAm4AAAAASUVORK5CYII=
+      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
+      /rjWAAAAAElFTkSuQmCC
     </thumbnail>
     <thumbnail height='184' name='Sheet 2' width='192'>
       iVBORw0KGgoAAAANSUhEUgAAAMAAAAC4CAYAAAC1reOrAAAACXBIWXMAAA7DAAAOwwHHb6hk
@@ -1207,56 +1650,336 @@
     </thumbnail>
     <thumbnail height='192' name='Time in Shelter' width='192'>
       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
-      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
-      7T+RncUFYAWJ5wAAAABJRU5ErkJggg==
+      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
+      QmCC
+    </thumbnail>
+    <thumbnail height='192' name='Time in Shelter by Outcome' width='192'>
+      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
+      22kyX/z4GGenWom3nSppz04MENvnyZe9HtYTtp7MVg+8Fl1kVQfbZGM9y8ipZkjUsqxDOxPs
+      d3ey/PDCotfe6SAfP9nXpg36Ry9P424tj+JhjbHBllap67pEo9vOjBX8XtMDDiCRiEVwZI2B
+      wWFsu5npu3hjmW9+/7LX62NTKbKl1q6ygHp46/f1Yt1ziGRE45vf/403ndrpLNNDUUy7NWg+
+      N5ZCUluOeXYi7TnPTnFcx3G4vpjFcZqf3+lcO8Vxt78AdiMcDu8pvCvYHz0rjruynme91BKd
+      DQVkqg1n17YiSygyNCx31766KlG33H3ZepCdfiCP/jS2AqqE7YC99YVvtl1sZ3dbAwmdSLD1
+      TlrdrHmCvztt65rMcF/Iu+Y4zqEdESVJEuFwa0rYaDQwTXPP/tsFbHeyU9D2ceK4j7K1U037
+      aRDiuMKWsCXEcQVHHV8c4MKv3xbiuIKexBcHiB/SVEYgOGw6HgWqlXKYKJhmfc8+9aqBhYKu
+      qTiOQyAgKkIF/uCLOG48uIJlK83jfHaJ2pm2zdr6CtVimczoBH0JRWyIEbZ8seVLHiCX3+Da
+      rRWeOfsc2i4OMHfjGomhMUJhh3qjgaLExYYYYcsXW/5og5ZrjI2fYK/c1dkXX/LjMQSCh/Bl
+      EWzZNrremtffvHqZYqVOb2YgBEeJzm+Kt0yGBgdZ2jAenMKJ6pr89Mc/4XNf/ALhAz7BP1+4
+      ztxKAWiWRfz5m7Ni8Sx4Yjq/HyC3REUKk8mEveFmZW2DUvY+pZpNeLcTM/bBb26vtlWDfuUz
+      Zw/piQVHiY5PgaxqgQ/u3McwKriA6zgoWpiZ6am2Q6EFgm7w/wESALo3XwII9QAAAABJRU5E
+      rkJggg==
+    </thumbnail>
+    <thumbnail height='192' name='Time in Shelter by Outcome + Intake' width='192'>
+      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
+      AW1uIbDvQvOLAAAAAElFTkSuQmCC
     </thumbnail>
   </thumbnails>
 </workbook>
