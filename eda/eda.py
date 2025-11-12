@@ -129,7 +129,7 @@ def categorical_conditionals_text(
 
 def preprocess():
     lfs: list[pl.LazyFrame] = []
-    for file in glob.glob("data/raw/*.csv"):
+    for file in glob.glob("../data/raw/*.csv"):
         lf = pl.scan_csv(file, try_parse_dates=True)
         lfs.append(lf)
 
@@ -164,7 +164,7 @@ def preprocess():
 
     # df  = df.filter(pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_())
 
-    # pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
+    # pantab.frame_to_hyper(df, "../data/clean/all_data.hyper", table="records")
 
     # print_missing_values(df)
     print_unique_values(df)
