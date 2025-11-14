@@ -1,31 +1,19 @@
+# San Jose Animal Shelter Analysis
 
-IntakeType = 'DISASTER' (n=27):
-  OutcomeType:
-    - 'RTO': 100.0%
+## Overview
 
-IntakeType = 'DISPO REQ' (n=9965):
-  OutcomeType:
-    - 'DISPOSAL': 99.8%
+This project analyzes animal intake and outcome data from the San Jose Animal Shelter, focusing specifically on cats. The goal is to predict the outcome / adoption time for cats.
 
-IntakeType = 'NEUTER' (n=41):
-  OutcomeType:
-    - 'RTF': 2.4%
-    - 'NEUTER': 95.1%
-    - 'RTO': 2.4%
+## Data
 
-IntakeType = 'SPAY' (n=44):
-  OutcomeType:
-    - 'SPAY': 93.2%
-    - 'NEUTER': 2.3%
+Dataset Website: https://data.sanjoseca.gov/dataset/animal-shelter-intake-and-outcomes
 
-IntakeType = 'EUTH REQ' (n=301):
-  OutcomeType:
-    - 'FOSTER': 5.3%
-    - 'RTO': 20.9%
-    - 'ADOPTION': 34.2%
-    - 'RESCUE': 31.2%
-    - 'TRANSFER': 8.3%
+This dataset is quite comprehensive. It has records of tens of thousands of
+animals that have passed through the animal shelter. The dataset includes records about
+lost/found reports, stray and owned animals spay/neuter clinics, returned or confiscated animals,
+as well as the usual stray animals that are turned in.
 
-OutcomeType = 'FOUND ANIM' (n=886):
-  IntakeType:
-    - 'STRAY': 100.0%
+Key features:
+
+- **Animal Characteristics**: Animal Type, Color, Breed, Sex, Age
+- **Shelter Events**: Intake + Outcome Date, Condition, and Type

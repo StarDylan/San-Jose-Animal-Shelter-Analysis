@@ -4,6 +4,7 @@ import glob
 from collections.abc import Iterable
 import polars as pl
 import pantab
+from datetime import datetime, timedelta
 
 # pyright: reportUnknownMemberType=none
 
@@ -218,6 +219,19 @@ def categorical_conditionals_text(
 
     return "\n".join(lines)
 
+def percentiles_time_in_shelter(df: pl.DataFrame, percentiles: list[float]) -> pl.DataFrame:
+    df = df.with_columns(
+        (pl.col("OutcomeDate") - pl.col("IntakeDate")).dt.total_days().alias("TimeInShelterDays")
+    )
+
+    percentile_exprs = [
+        pl.col("TimeInShelterDays").quantile(q).alias(f"P{int(q * 100)}") for q in percentiles
+    ]
+
+    result = df.select(percentile_exprs)
+
+    return result
+
 
 def preprocess():
     lfs: list[pl.LazyFrame] = []
@@ -250,6 +264,8 @@ def preprocess():
         (pl.col("OutcomeType").is_in(["SPAY", "NEUTER", "FOUND ANIM", "LOST EXP", "FOUND EXP", "MISSING", "RTO", "REQ EUTH"]).not_())
         &
         (pl.col("AnimalType").eq("CAT"))
+        # & (pl.col("IntakeDate") < pl.datetime(2025, 1, 1))
+        & (pl.col("OutcomeDate") < datetime.now() + timedelta(days=1)) # Anything in the future is wrong
     )
 
     df  = df.filter(
@@ -315,12 +331,7 @@ def preprocess():
             .alias("Sex")
         )
     
-    # 
-
-
-    
-
-    pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
+    # pantab.frame_to_hyper(df, "../data/clean/all_data.hyper", table="records")
 
     # print_missing_values(df)
     print_unique_values(df)
