@@ -1,8 +1,93 @@
+
 from enum import unique
 import glob
 from collections.abc import Iterable
 import polars as pl
 import pantab
+
+# pyright: reportUnknownMemberType=none
+
+
+# What is REHAB?
+# Time in shelter with IntakeReason == "IP ADOPT"
+
+
+import polars as pl
+
+# --- 1) Helpers ---------------------------------------------------------------
+
+def collapse_colors(col: pl.Expr) -> pl.Expr:
+    c = (
+        col.str.to_uppercase()
+          .str.replace_all(r"[^\w\s/-]", "")   # drop odd chars like backslashes
+          .str.replace_all(r"\s+", " ")
+          .str.strip_chars()
+    )
+    # Normalize some aliases first
+    c = (
+        c.str.replace_all(r"\bBLUE\b", "GRAY")
+         .str.replace_all(r"\bYELLOW\b", "ORANGE")
+         .str.replace_all(r"\bBRN\b", "BROWN")
+         .str.replace_all(r"\bORG\b", "ORANGE")
+    )
+
+    # Rule-based buckets
+    return (
+        pl.when(c.str.contains(r"\bTABBY"))      .then(pl.lit("TABBY"))
+         .when(c.str.contains(r"\bTORBI"))       .then(pl.lit("TORBIE"))
+         .when(c.str.contains(r"\bCALICO"))      .then(pl.lit("CALICO"))
+         .when(c.str.contains(r"\bTORTIE"))      .then(pl.lit("TORTIE"))
+         .when(c.str.contains(r"\bPT[- ]"))      .then(pl.lit("POINT"))   # PT-LILAC, PT-SEAL, etc.
+         .when(c.str.contains(r"\bBUFF|CREAM"))  .then(pl.lit("CREAM/BUFF"))
+         .when(c.str.contains(r"\bGRAY"))        .then(pl.lit("GRAY"))
+         .when(c.str.contains(r"\bBLACK"))       .then(pl.lit("BLACK"))
+         .when(c.str.contains(r"\bWHITE"))       .then(pl.lit("WHITE"))
+         .when(c.str.contains(r"\bORANGE"))      .then(pl.lit("ORANGE"))
+         .otherwise(pl.lit("OTHER COLOR"))
+    )
+
+def collapse_secondary_colors(col: pl.Expr) -> pl.Expr:
+    c = (
+        col.str.to_uppercase()
+          .str.replace_all(r"[^\w\s/-]", "")   # drop odd chars like backslashes
+          .str.replace_all(r"\s+", " ")
+          .str.strip_chars()
+    )
+    # Normalize some aliases first
+    c = (
+        c.str.replace_all(r"\bBLUE\b", "GRAY")
+         .str.replace_all(r"\bYELLOW\b", "ORANGE")
+         .str.replace_all(r"\bBRN\b", "BROWN")
+         .str.replace_all(r"\bORG\b", "ORANGE")
+    )
+
+    # Rule-based buckets
+    return (
+        pl.when(c.str.contains(r"\bBLACK"))      .then(pl.lit("BLACK"))
+         .when(c.str.contains(r"\bWHITE"))       .then(pl.lit("WHITE"))
+         .when(c.str.contains(r"\bGRAY"))        .then(pl.lit("GRAY"))
+         .when(c.is_null())                              .then(pl.lit(None))
+         .otherwise(pl.lit("OTHER COLOR"))
+    )
+
+def collapse_breeds(col: pl.Expr) -> pl.Expr:
+    b = (
+        col.str.to_uppercase()
+          .str.replace_all(r"\s+", " ")
+          .str.strip_chars()
+    )
+    # Keep hair-length domestics separate; bucket the rest
+    base = (
+        pl.when(b.str.starts_with("DOMESTIC SH")).then(pl.lit("DOMESTIC SH"))
+         .when(b.str.starts_with("DOMESTIC MH")).then(pl.lit("DOMESTIC MH"))
+         .when(b.str.starts_with("DOMESTIC LH")).then(pl.lit("DOMESTIC LH"))
+    )
+
+    return (
+        pl.when(base.str.starts_with("DOMESTIC")).then(base)
+         .otherwise(pl.lit("OTHER BREED"))
+    )
+
 
 columns_to_drop = [
     "Crossing",
@@ -49,6 +134,14 @@ def print_missing_values(df: pl.DataFrame):
 
 def print_unique_values(df: pl.DataFrame):
     print("\n\nColumns + Values\n==============================")
+    df = df.with_columns([
+        pl.when(pl.col(col).is_in([True, False]))
+        .then(pl.col(col).cast(pl.Utf8))
+        .alias(col)
+        for col in df.columns if df[col].dtype == pl.Boolean
+    ])
+
+
     for column in df.columns:
         print(column, df[column].dtype)
         unique_values = df[column].unique(maintain_order=True).to_list()
@@ -159,16 +252,83 @@ def preprocess():
         (pl.col("AnimalType").eq("CAT"))
     )
 
-    df  = df.filter(pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_())
+    df  = df.filter(
+        pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_()
+        )
+
+    # df = df.filter(pl.col("IntakeCondition").eq("FERAL"))
+
+    for state in ["Outcome", "Intake"]:
+        df = df.with_columns(
+            pl.when(pl.col(f"{state}Condition") == "NURSING")
+                .then(pl.lit(True))
+                .otherwise(pl.lit(False))
+                .alias(f"{state}IsNursing")
+        )
+        df = df.with_columns(
+            pl.when(pl.col(f"{state}Condition") == "NORMAL").then(0)
+            .when(pl.col(f"{state}Condition") == "BEH R").then(1)
+            .when(pl.col(f"{state}Condition") == "BEH M").then(2)
+            .when(pl.col(f"{state}Condition") == "BEH U").then(4)
+            .otherwise(0)  # or .otherwise(999) for unknowns
+            .alias(f"{state}BehaviorIssueIndex")
+        )
+        df = df.with_columns(
+            pl.when(pl.col(f"{state}Condition") == "NORMAL").then(0)
+            .when(pl.col(f"{state}Condition") == "MED R").then(1)
+            .when(pl.col(f"{state}Condition") == "MED M").then(2)
+            .when(pl.col(f"{state}Condition") == "MED SEV").then(4)
+            .when(pl.col(f"{state}Condition") == "MED EMERG").then(4)
+            .otherwise(statement=0)  # If it wasn't noted, then we assume NORMAL
+            .alias(f"{state}MedicalIssueIndex")
+        )
+
+        df = df.drop(f"{state}Condition")
+    
+    # Print number of Nones of DOB
+    df = df.with_columns(
+        (pl.col("DOB") - pl.col("IntakeDate")).dt.total_days().alias("AgeDays")
+    )
+
+    df = df.drop(["DOB", "Age"])
+
+    # --- 2) Apply to your dataframe ----------------------------------------------
+# Suppose df has columns: "PrimaryColor", "SecondaryColor", "PrimaryBreed"
+
+    df = df.with_columns([
+        collapse_colors(pl.col("PrimaryColor")).alias("PrimaryColor"),
+        collapse_secondary_colors(pl.col("SecondaryColor")).alias("SecondaryColor"),
+        collapse_breeds(pl.col("PrimaryBreed")).alias("PrimaryBreed"),
+    ])
+
+    df = df.with_columns(
+        pl.when(pl.col("Sex").is_in(["SPAYED", "NEUTERED"])).then(pl.lit("Spayed/Neutered"))
+        .when(pl.col("Sex").is_in(["MALE", "FEMALE"])).then(pl.lit("Not Spayed/Neutered"))
+        .otherwise(pl.lit("Unknown"))
+        .alias("SpayedNeutered")
+    )
+
+    df = df.with_columns(
+            pl.when(pl.col("Sex").is_in(["MALE", "NEUTERED"])).then(pl.lit("Male"))
+            .when(pl.col("Sex").is_in(["FEMALE", "SPAYED"])).then(pl.lit("Female"))
+            .otherwise(pl.lit("Unknown"))
+            .alias("Sex")
+        )
+    
+    # 
+
+
+    
 
     pantab.frame_to_hyper(df, "data/clean/all_data.hyper", table="records")
 
-    # # print_missing_values(df)
-    # print_unique_values(df)
-    print(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
+    # print_missing_values(df)
+    print_unique_values(df)
+    # print(categorical_conditionals_text(df, ["IntakeCondition", "OutcomeType", "OutcomeCondition"]))
     # with open("output.txt", "w") as f:
     #     _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
 
 
 if __name__ == "__main__":
+
     preprocess()

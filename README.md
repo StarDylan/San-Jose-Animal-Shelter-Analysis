@@ -25,3 +25,7 @@ IntakeType = 'EUTH REQ' (n=301):
     - 'ADOPTION': 34.2%
     - 'RESCUE': 31.2%
     - 'TRANSFER': 8.3%
+
+OutcomeType = 'FOUND ANIM' (n=886):
+  IntakeType:
+    - 'STRAY': 100.0%
