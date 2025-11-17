@@ -5,7 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "altair>=6.0.0",
+    "ipykernel>=7.1.0",
     "pantab>=5.2.2",
+    "pip>=25.3",
     "plotly>=6.4.0",
     "polars>=1.35.1",
+    "scikit-learn>=1.7.2",
+    "vegafusion>=2.0.3",
+    "vl-convert-python>=1.8.0",
 ]

@@ -269,7 +269,7 @@ def preprocess():
     )
 
     df  = df.filter(
-        pl.col("OutcomeType").is_in(["TRANSFER", "DIED", "RESCUE", "RTF"]).not_()
+        pl.col("OutcomeType").is_in(["DIED"]).not_()
         )
 
     # df = df.filter(pl.col("IntakeCondition").eq("FERAL"))
@@ -285,7 +285,7 @@ def preprocess():
             pl.when(pl.col(f"{state}Condition") == "NORMAL").then(0)
             .when(pl.col(f"{state}Condition") == "BEH R").then(1)
             .when(pl.col(f"{state}Condition") == "BEH M").then(2)
-            .when(pl.col(f"{state}Condition") == "BEH U").then(4)
+            .when(pl.col(f"{state}Condition") == "BEH U").then(3)
             .otherwise(0)  # or .otherwise(999) for unknowns
             .alias(f"{state}BehaviorIssueIndex")
         )
@@ -293,7 +293,7 @@ def preprocess():
             pl.when(pl.col(f"{state}Condition") == "NORMAL").then(0)
             .when(pl.col(f"{state}Condition") == "MED R").then(1)
             .when(pl.col(f"{state}Condition") == "MED M").then(2)
-            .when(pl.col(f"{state}Condition") == "MED SEV").then(4)
+            .when(pl.col(f"{state}Condition") == "MED SEV").then(3)
             .when(pl.col(f"{state}Condition") == "MED EMERG").then(4)
             .otherwise(statement=0)  # If it wasn't noted, then we assume NORMAL
             .alias(f"{state}MedicalIssueIndex")
@@ -303,7 +303,7 @@ def preprocess():
     
     # Print number of Nones of DOB
     df = df.with_columns(
-        (pl.col("DOB") - pl.col("IntakeDate")).dt.total_days().alias("AgeDays")
+        (pl.col("IntakeDate") - pl.col("DOB")).dt.total_days().alias("AgeDays")
     )
 
     df = df.drop(["DOB", "Age"])
@@ -331,13 +331,22 @@ def preprocess():
             .alias("Sex")
         )
     
-    # pantab.frame_to_hyper(df, "../data/clean/all_data.hyper", table="records")
+    df = df.with_columns(
+        pl.col("IntakeDate").dt.month().alias("IntakeMonth"),
+    )
+    
+    df = df.with_columns(
+        (pl.col("OutcomeDate") - pl.col("IntakeDate")).dt.total_days().alias("TimeInShelterDays")
+    )
+    pantab.frame_to_hyper(df, "data/clean/cleaned_data.hyper", table="records")
 
     # print_missing_values(df)
     print_unique_values(df)
     # print(categorical_conditionals_text(df, ["IntakeCondition", "OutcomeType", "OutcomeCondition"]))
     # with open("output.txt", "w") as f:
     #     _ = f.write(categorical_conditionals_text(df, ["IntakeType", "OutcomeType"]))
+
+    df.write_parquet("data/clean/cleaned_data.parquet")
 
 
 if __name__ == "__main__":
