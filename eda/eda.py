@@ -94,10 +94,10 @@ columns_to_drop = [
     "Crossing",
     "Jurisdiction",
     "OutcomeSubtype", # All Nulls
-    "LastUpdate",
 
 ]
 columns_to_keep = [
+    "LastUpdate",
     "AnimalID",
     "AnimalName",
     "AnimalType",
@@ -306,7 +306,7 @@ def preprocess():
         (pl.col("IntakeDate") - pl.col("DOB")).dt.total_days().alias("AgeDays")
     )
 
-    df = df.drop(["DOB", "Age"])
+    # df = df.drop(["DOB", "Age"])
 
     # --- 2) Apply to your dataframe ----------------------------------------------
 # Suppose df has columns: "PrimaryColor", "SecondaryColor", "PrimaryBreed"

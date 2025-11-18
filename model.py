@@ -38,22 +38,15 @@ def eval():
    
     predictions = {}
     probabilities = {}
-    models = [random_forest(), dummy_model()]
+    models = [random_forest(), dummy_model(), external_chars_rf()]
 
     for model, name in models:
         _ = model.fit(X_train, y_train)
         predictions[name] = model.predict(X_test)
         probabilities[name] = model.predict_proba(X_test)
 
-    
-    rf, name = random_forest()
-    _ = rf.fit(X_train, y_train)
-    feature_names = rf.named_steps['preprocessor'].get_feature_names_out()
-    importances = rf.named_steps['classifier'].feature_importances_
-    feature_importances = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
-    print("=== Random Forest Feature Importances ===")
-    for feature, importance in feature_importances[:10]:
-        print(f"{feature}: {importance:.4f}")
+    rf_importances(external_chars_rf, X_train, y_train)
+    rf_importances(random_forest, X_train, y_train)
 
 
     print("\n=== Binary Classifier Comparison (enjoyment > ()) ===")
@@ -66,6 +59,16 @@ def eval():
     print("\nSaved interactive plots:")
     print(" - roc_curve.html")
     print(" - pr_curve.html")
+
+def rf_importances(model_func, X_train, y_train):
+    rf, name = model_func()
+    _ = rf.fit(X_train, y_train)
+    feature_names = rf.named_steps['preprocessor'].get_feature_names_out()
+    importances = rf.named_steps['classifier'].feature_importances_
+    feature_importances = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
+    print(f"=== Random Forest Feature Importances for {name} ===")
+    for feature, importance in feature_importances[:10]:
+        print(f"{feature}: {importance:.4f}")
 
 def random_forest():
 
@@ -109,6 +112,44 @@ def random_forest():
         ('classifier', RandomForestClassifier())
     ])
     return (model, "Logistic Regression")
+
+
+def external_chars_rf():
+
+    numeric_features = [
+    ]
+
+    categorical_features = [
+        "PrimaryBreed",
+        "PrimaryColor",
+        "SecondaryColor",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler())
+    ])
+
+    # Preprocessing for categorical data
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    # Combine both types of preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)
+        ])
+
+    # Full pipeline including the model
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestClassifier())
+    ])
+    return (model, "Logistic Regression with external characteristics")
+
 
 def dummy_model():
     model = DummyClassifier(strategy="most_frequent")
