@@ -300,6 +300,11 @@ def preprocess():
         )
 
         df = df.drop(f"{state}Condition")
+
+    
+    df = df.with_columns(
+        pl.max_horizontal(pl.col("IntakeDate"), pl.col("DOB")).alias("IntakeDate")
+    )
     
     # Print number of Nones of DOB
     df = df.with_columns(
