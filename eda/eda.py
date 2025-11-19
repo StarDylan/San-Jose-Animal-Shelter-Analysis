@@ -263,7 +263,7 @@ def preprocess():
         &
         (pl.col("OutcomeType").is_in(["SPAY", "NEUTER", "FOUND ANIM", "LOST EXP", "FOUND EXP", "MISSING", "RTO", "REQ EUTH"]).not_())
         &
-        (pl.col("AnimalType").eq("CAT"))
+        (pl.col("AnimalType").eq("CAT")) 
         # & (pl.col("IntakeDate") < pl.datetime(2025, 1, 1))
         & (pl.col("OutcomeDate") < datetime.now() + timedelta(days=1)) # Anything in the future is wrong
     )

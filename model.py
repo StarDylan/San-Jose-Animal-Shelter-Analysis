@@ -12,6 +12,12 @@ from sklearn.ensemble import RandomForestClassifier
 
 from eval_utils import print_report, plot_roc_curves, plot_pr_curves
 
+from sklearn.inspection import permutation_importance
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
 # pyright: reportUnknownMemberType=none
 
 def eval():
@@ -45,8 +51,11 @@ def eval():
         predictions[name] = model.predict(X_test)
         probabilities[name] = model.predict_proba(X_test)
 
-    rf_importances(external_chars_rf, X_train, y_train)
-    rf_importances(random_forest, X_train, y_train)
+    rf_importances(models[0][0], models[0][1], X_test, y_test)
+
+    # Count positive and negative samples
+    unique, counts = pl.Series(y_test).value_counts().sort("count").to_numpy().tolist()
+    print(f"Test set class distribution: {dict(zip(unique, counts))}")
 
 
     print("\n=== Binary Classifier Comparison (enjoyment > ()) ===")
@@ -60,15 +69,23 @@ def eval():
     print(" - roc_curve.html")
     print(" - pr_curve.html")
 
-def rf_importances(model_func, X_train, y_train):
-    rf, name = model_func()
-    _ = rf.fit(X_train, y_train)
-    feature_names = rf.named_steps['preprocessor'].get_feature_names_out()
-    importances = rf.named_steps['classifier'].feature_importances_
-    feature_importances = sorted(zip(feature_names, importances), key=lambda x: x[1], reverse=True)
-    print(f"=== Random Forest Feature Importances for {name} ===")
-    for feature, importance in feature_importances[:10]:
-        print(f"{feature}: {importance:.4f}")
+def rf_importances(model, name, X_test, y_test):
+    X_test = X_test.to_pandas()
+    result = permutation_importance(
+        model, X_test, y_test, n_repeats=20, random_state=42, n_jobs=2, scoring="f1"
+    )
+
+    feature_names = list(X_test.columns)  # original columns
+    forest_importances = pd.Series(result.importances_mean, index=feature_names)
+
+    fig, ax = plt.subplots()
+    forest_importances.plot.bar(yerr=result.importances_std, ax=ax)
+    ax.set_title(f"Feature importances using permutation on {name}")
+    ax.set_ylabel("Mean F1 decrease")
+    fig.tight_layout()
+    
+    # save to file
+    plt.savefig("rf_permutation_importance.png")
 
 def random_forest():
 
@@ -111,7 +128,7 @@ def random_forest():
         ('preprocessor', preprocessor),
         ('classifier', RandomForestClassifier())
     ])
-    return (model, "Logistic Regression")
+    return (model, "Random Forest Classifier")
 
 
 def external_chars_rf():
@@ -148,7 +165,7 @@ def external_chars_rf():
         ('preprocessor', preprocessor),
         ('classifier', RandomForestClassifier())
     ])
-    return (model, "Logistic Regression with external characteristics")
+    return (model, "Random Forest Classifier with external characteristics")
 
 
 def dummy_model():

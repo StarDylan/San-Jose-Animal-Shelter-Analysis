@@ -7,6 +7,8 @@ requires-python = ">=3.13"
 dependencies = [
     "altair>=6.0.0",
     "ipykernel>=7.1.0",
+    "matplotlib>=3.10.7",
+    "pandas>=2.3.3",
     "pantab>=5.2.2",
     "pip>=25.3",
     "plotly>=6.4.0",
