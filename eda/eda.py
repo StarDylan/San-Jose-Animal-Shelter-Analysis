@@ -338,6 +338,14 @@ def preprocess():
             .otherwise(pl.lit("Unknown"))
             .alias("Sex")
         )
+
+    df = df.with_columns(
+           pl.when(pl.col("AgeDays") < 365).then(pl.col("AgeDays")).alias("YoungCatAgeDays")
+        )
+
+    df = df.with_columns(
+        pl.when(pl.col("AgeDays") >= 365).then((pl.col("AgeDays") / 365).round()).alias("OldCatAgeYears")
+    )
     
     df = df.with_columns(
         pl.col("IntakeDate").dt.month().alias("IntakeMonth"),
