@@ -322,12 +322,15 @@ def preprocess():
         collapse_breeds(pl.col("PrimaryBreed")).alias("PrimaryBreed"),
     ])
 
-    df = df.with_columns(
-        pl.when(pl.col("Sex").is_in(["SPAYED", "NEUTERED"])).then(pl.lit("Spayed/Neutered"))
-        .when(pl.col("Sex").is_in(["MALE", "FEMALE"])).then(pl.lit("Not Spayed/Neutered"))
-        .otherwise(pl.lit("Unknown"))
-        .alias("SpayedNeutered")
-    )
+    # Introduces target leakage! This is updated when they are adopted.
+    # All adoptions are marked as spayed/neutered
+    #
+    # df = df.with_columns(
+    #     pl.when(pl.col("Sex").is_in(["SPAYED", "NEUTERED"])).then(pl.lit("Spayed/Neutered"))
+    #     .when(pl.col("Sex").is_in(["MALE", "FEMALE"])).then(pl.lit("Not Spayed/Neutered"))
+    #     .otherwise(pl.lit("Unknown"))
+    #     .alias("SpayedNeutered")
+    # )
 
     df = df.with_columns(
             pl.when(pl.col("Sex").is_in(["MALE", "NEUTERED"])).then(pl.lit("Male"))
