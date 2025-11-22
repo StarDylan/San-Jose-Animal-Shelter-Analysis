@@ -49,6 +49,8 @@ def eval():
     for model, name in models:
         print(f"Evaluating model: {name}")
         _ = model.fit(X_train, y_train)
+
+        print("")
         predictions[name] = model.predict(X_test)
 
         # Output MSE + Explained variance

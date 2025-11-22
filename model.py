@@ -75,15 +75,17 @@ def rf_importances(model, name, X_test, y_test):
         model, X_test, y_test, n_repeats=20, random_state=42, n_jobs=2, scoring="f1"
     )
 
-    feature_names = list(X_test.columns)  # original columns
-    forest_importances = pd.Series(result.importances_mean, index=feature_names)
-
-    fig, ax = plt.subplots()
-    forest_importances.plot.bar(yerr=result.importances_std, ax=ax)
-    ax.set_title(f"Feature importances using permutation on {name}")
-    ax.set_ylabel("Mean F1 decrease")
-    fig.tight_layout()
-    
+    sorted_importances_idx = result.importances_mean.argsort()
+    importances = pd.DataFrame(
+        result.importances[sorted_importances_idx].T,
+        columns=X_test.columns[sorted_importances_idx],
+    )
+    ax = importances.plot.box(vert=False, whis=10)
+    ax.set_title("Permutation Importances (test set)")
+    ax.axvline(x=0, color="k", linestyle="--")
+    ax.set_xlabel("Decrease in F1 score")
+    ax.figure.tight_layout()
+        
     # save to file
     plt.savefig("rf_permutation_importance.png")
 
