@@ -254,10 +254,6 @@ def preprocess():
 
     df = df[columns_to_keep]
 
-    rows_to_remove = {
-        "IntakeType": ["SPAY", "NEUTER"]
-    }
-
     df =df.filter(
         (pl.col("IntakeType").is_in(["SPAY", "NEUTER", "DISASTER", "DISPO REQ", "WILDLIFE", "S/N CLINIC"]).not_())
         &

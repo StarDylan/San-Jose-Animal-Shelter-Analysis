@@ -8,7 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 
 from eval_utils import print_report, plot_roc_curves, plot_pr_curves
 
@@ -23,19 +23,19 @@ import matplotlib.pyplot as plt
 def eval():
     df = pl.read_parquet("data/clean/cleaned_data.parquet")
 
+    df = df.filter(pl.col("OutcomeType") != "FOSTER") # Remove foster outcomes, since they are temporary
+
 
     # Remove target values
     X = df.select([
         "IntakeType",
         "AgeDays",
         "IntakeMonth",
-        "Sex",
         "PrimaryBreed",
         "PrimaryColor",
         "SecondaryColor",
         "IntakeIsNursing",
         "IntakeMedicalIssueIndex",
-        "SpayedNeutered",
     ])
 
     y = (df.select("OutcomeType") == "ADOPTION").cast(pl.Int8).to_numpy().ravel()
@@ -44,7 +44,7 @@ def eval():
    
     predictions = {}
     probabilities = {}
-    models = [random_forest(), dummy_model(), external_chars_rf()]
+    models = [random_forest(), dummy_model(), gradient_boosting()]
 
     for model, name in models:
         _ = model.fit(X_train, y_train)
@@ -69,6 +69,8 @@ def eval():
     print(" - roc_curve.html")
     print(" - pr_curve.html")
 
+    print("See rf_permutation_importance.png for feature importances.")
+
 def rf_importances(model, name, X_test, y_test):
     X_test = X_test.to_pandas()
     result = permutation_importance(
@@ -81,7 +83,7 @@ def rf_importances(model, name, X_test, y_test):
         columns=X_test.columns[sorted_importances_idx],
     )
     ax = importances.plot.box(vert=False, whis=10)
-    ax.set_title("Permutation Importances (test set)")
+    ax.set_title("Permutation Importances for Adoption Classification")
     ax.axvline(x=0, color="k", linestyle="--")
     ax.set_xlabel("Decrease in F1 score")
     ax.figure.tight_layout()
@@ -99,12 +101,10 @@ def random_forest():
 
     categorical_features = [
         "IntakeType",
-        "Sex",
         "PrimaryBreed",
         "PrimaryColor",
         "SecondaryColor",
         "IntakeIsNursing",
-        "SpayedNeutered",
     ]
 
     numeric_transformer = Pipeline(steps=[
@@ -133,15 +133,20 @@ def random_forest():
     return (model, "Random Forest Classifier")
 
 
-def external_chars_rf():
+def gradient_boosting():
 
     numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
     ]
 
     categorical_features = [
+        "IntakeType",
         "PrimaryBreed",
         "PrimaryColor",
         "SecondaryColor",
+        "IntakeIsNursing",
     ]
 
     numeric_transformer = Pipeline(steps=[
@@ -165,9 +170,9 @@ def external_chars_rf():
     # Full pipeline including the model
     model = Pipeline(steps=[
         ('preprocessor', preprocessor),
-        ('classifier', RandomForestClassifier())
+        ('classifier', GradientBoostingClassifier())
     ])
-    return (model, "Random Forest Classifier with external characteristics")
+    return (model, "Gradient Boosting Classifier")
 
 
 def dummy_model():
