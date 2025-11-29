@@ -23,6 +23,8 @@ from sklearn.inspection import permutation_importance
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import joblib
+import os
 import shap
 
 
@@ -71,6 +73,13 @@ def eval():
 
     
         rf_importances(models[0][0], models[0][1], X_test, y_test)
+
+    # Save the trained regression pipeline to disk for interactive use
+    models_dir = "models"
+    os.makedirs(models_dir, exist_ok=True)
+    regr_path = os.path.join(models_dir, "rf_regression_pipeline.joblib")
+    joblib.dump(models[0][0], regr_path)
+    print(f"Saved regression pipeline to: {regr_path}")
 
     # --- SHAP analysis for the Random Forest regressor ---
     # Use the trained pipeline (first model) and compute SHAP values on the test set

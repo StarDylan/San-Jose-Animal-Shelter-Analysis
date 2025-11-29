@@ -19,6 +19,9 @@ import matplotlib.pyplot as plt
 
 import shap
 import numpy as np
+import joblib
+import os
+import joblib
 
 
 # pyright: reportUnknownMemberType=none
@@ -75,6 +78,13 @@ def eval():
     print("See rf_permutation_importance.png for feature importances.")
 
     pipeline = models[0][0]
+
+    # Save the trained classification pipeline to disk for interactive use
+    models_dir = "models"
+    os.makedirs(models_dir, exist_ok=True)
+    clf_path = os.path.join(models_dir, "rf_classifier_pipeline.joblib")
+    joblib.dump(pipeline, clf_path)
+    print(f"Saved classification pipeline to: {clf_path}")
 
     X_preprocessed = np.asarray(pipeline.named_steps["preprocessor"].transform(X).toarray(), dtype=np.float64)
 
