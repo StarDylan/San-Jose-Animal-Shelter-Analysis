@@ -23,6 +23,7 @@ from sklearn.inspection import permutation_importance
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import shap
 
 
 # pyright: reportUnknownMemberType=none
@@ -37,15 +38,14 @@ def eval():
     # Remove target values
     X = df.select([
         "IntakeType",
-        "YoungCatAgeDays",
-        "OldCatAgeYears",
+        "AgeDays",
         "IntakeMonth",
         "PrimaryBreed",
         "PrimaryColor",
         "SecondaryColor",
         "IntakeIsNursing",
         "IntakeMedicalIssueIndex",
-    ])
+    ]).to_pandas()
 
     y: ndarray[tuple[int], Any] = (df.select("TimeInShelterDays")).cast(pl.Int64).to_numpy().ravel()
     print(np.unique(y))
@@ -72,10 +72,68 @@ def eval():
     
         rf_importances(models[0][0], models[0][1], X_test, y_test)
 
+    # --- SHAP analysis for the Random Forest regressor ---
+    # Use the trained pipeline (first model) and compute SHAP values on the test set
+    pipeline = models[0][0]
+    rf = pipeline.named_steps["classifier"]
+
+    # Transform features via the pipeline preprocessor. Handle sparse outputs.
+    X_trans = pipeline.named_steps["preprocessor"].transform(X_test)
+
+    X_preprocessed = np.asarray(X_trans.toarray(), dtype=np.float64)
+
+    feature_names = pipeline.named_steps["preprocessor"].get_feature_names_out()
+
+    # Subsample for SHAP to keep computations fast
+    max_shap_samples = 1000
+    if X_preprocessed.shape[0] > max_shap_samples:
+        sample_indices = np.random.RandomState(0).choice(
+            X_preprocessed.shape[0], size=max_shap_samples, replace=False
+        )
+        X_shap = X_preprocessed[sample_indices]
+    else:
+        sample_indices = np.arange(X_preprocessed.shape[0])
+        X_shap = X_preprocessed
+
+    print("Using SHAP input shape:", X_shap.shape)
+
+    print("Starting SHAP value computation for regression model...")
+    explainer = shap.TreeExplainer(model=rf, feature_names=feature_names)
+    shap_values = explainer(X_shap)
+
+    # Summary violin plot
+    plt.clf()
+    fig = plt.figure(figsize=(15, 10))
+    shap.plots.violin(
+        shap_values,
+        features=X_shap,
+        plot_type="layered_violin",
+        show=False,
+    )
+    fig.savefig("shap_summary_plot_regression.png", bbox_inches="tight")
+    plt.close(fig)
+    print("Saved SHAP summary plot: shap_summary_plot_regression.png")
+
+    plt.clf()
+
+    # Waterfall plots for a few samples (aligned to test indices)
+    n_waterfalls = min(10, X_shap.shape[0])
+    for i in range(n_waterfalls):
+        sample_idx = sample_indices[i]
+        shap.plots.waterfall(shap_values[i], show=False)
+        # Use corresponding y_test value for context (y_test is a numpy array)
+        try:
+            actual_val = y_test[sample_idx]
+        except Exception:
+            actual_val = "N/A"
+        plt.title(f"SHAP Waterfall for Days till Adoption (Actual: {actual_val} days)")
+        plt.savefig(f"shap_force_plot_reg_{i}.png", bbox_inches="tight")
+        plt.close()
+
 
 
 def rf_importances(model, name, X_test, y_test):
-    X_test = X_test.to_pandas()
+    X_test = X_test
     result = permutation_importance(
         model, X_test, y_test, n_repeats=20, random_state=42, n_jobs=2, scoring="neg_mean_squared_error"
     )
@@ -97,8 +155,7 @@ def rf_importances(model, name, X_test, y_test):
 def random_forest():
 
     numeric_features = [
-        "YoungCatAgeDays",
-        "OldCatAgeYears",
+        "AgeDays",
         "IntakeMonth",
         "IntakeMedicalIssueIndex",
     ]
@@ -113,7 +170,6 @@ def random_forest():
 
     numeric_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='median')),
-        ('scaler', StandardScaler())
     ])
 
     # Preprocessing for categorical data

@@ -17,6 +17,9 @@ from sklearn.inspection import permutation_importance
 import pandas as pd
 import matplotlib.pyplot as plt
 
+import shap
+import numpy as np
+
 
 # pyright: reportUnknownMemberType=none
 
@@ -36,7 +39,7 @@ def eval():
         "SecondaryColor",
         "IntakeIsNursing",
         "IntakeMedicalIssueIndex",
-    ])
+    ]).to_pandas()
 
     y = (df.select("OutcomeType") == "ADOPTION").cast(pl.Int8).to_numpy().ravel()
 
@@ -44,7 +47,7 @@ def eval():
    
     predictions = {}
     probabilities = {}
-    models = [random_forest(), dummy_model(), gradient_boosting()]
+    models = [random_forest(), dummy_model(), gradient_boosting(), logistic_regression()]
 
     for model, name in models:
         _ = model.fit(X_train, y_train)
@@ -71,8 +74,61 @@ def eval():
 
     print("See rf_permutation_importance.png for feature importances.")
 
+    pipeline = models[0][0]
+
+    X_preprocessed = np.asarray(pipeline.named_steps["preprocessor"].transform(X).toarray(), dtype=np.float64)
+
+    feature_names = (
+        pipeline.named_steps["preprocessor"]
+                .get_feature_names_out()
+    )
+    rf = pipeline.named_steps["classifier"]
+
+    # subsample for SHAP to keep it fast
+    max_shap_samples = 1000
+    print(X_preprocessed.shape)
+    if X_preprocessed.shape[0] > max_shap_samples:
+        idx = np.random.RandomState(0).choice(
+            X_preprocessed.shape[0], size=max_shap_samples, replace=False
+        )
+        X_shap = X_preprocessed[idx]
+    else:
+        X_shap = X_preprocessed
+    print("Using SHAP input shape:", X_shap.shape)
+
+    print("Starting SHAP value computation...")
+    explainer = shap.TreeExplainer(model=rf, feature_names=feature_names)
+
+    # New-style SHAP API: explainer(...) returns a shap.Explanation
+    shap_values = explainer(X_shap)
+
+    # For binary classification, index class 1
+    fig = plt.figure(figsize=(15, 10))
+    shap.plots.violin(
+        shap_values[:, :, 1],
+        features=X_shap,
+        plot_type="layered_violin",
+        show=False,
+    )
+    fig.savefig("shap_summary_plot.png", bbox_inches="tight")
+    plt.close(fig)
+
+    print("Saved SHAP summary plot: shap_summary_plot.png")
+
+    print("Point #1")
+    # Clear plt
+    plt.clf()
+
+    for idx in range(10):
+        plt.clf()
+        shap.plots.waterfall(shap_values[idx, :, 1], show=False)
+        plt.title(f"SHAP Waterfall for Adoption Chance (Actual: {"ADOPTED" if y_test[idx] == 1 else "NOT ADOPTED"})")
+        plt.savefig(f"shap_force_plot_{idx}.png", bbox_inches="tight")
+        plt.close()
+
+
 def rf_importances(model, name, X_test, y_test):
-    X_test = X_test.to_pandas()
+    X_test = X_test
     result = permutation_importance(
         model, X_test, y_test, n_repeats=20, random_state=42, n_jobs=2, scoring="f1"
     )
@@ -98,7 +154,6 @@ def random_forest():
         "IntakeMonth",
         "IntakeMedicalIssueIndex",
     ]
-
     categorical_features = [
         "IntakeType",
         "PrimaryBreed",
@@ -109,7 +164,6 @@ def random_forest():
 
     numeric_transformer = Pipeline(steps=[
         ('imputer', SimpleImputer(strategy='median')),
-        ('scaler', StandardScaler())
     ])
 
     # Preprocessing for categorical data
@@ -173,6 +227,49 @@ def gradient_boosting():
         ('classifier', GradientBoostingClassifier())
     ])
     return (model, "Gradient Boosting Classifier")
+
+
+def logistic_regression():
+
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+
+    categorical_features = [
+        "IntakeType",
+        "PrimaryBreed",
+        "PrimaryColor",
+        "SecondaryColor",
+        "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler())
+    ])
+
+    # Preprocessing for categorical data
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    # Combine both types of preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)
+        ])
+
+    # Full pipeline including the model
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', LogisticRegression())
+    ])
+    return (model, "Logistic Regression")
+
 
 
 def dummy_model():
