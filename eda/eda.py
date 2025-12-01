@@ -254,10 +254,6 @@ def preprocess():
 
     df = df[columns_to_keep]
 
-    rows_to_remove = {
-        "IntakeType": ["SPAY", "NEUTER"]
-    }
-
     df =df.filter(
         (pl.col("IntakeType").is_in(["SPAY", "NEUTER", "DISASTER", "DISPO REQ", "WILDLIFE", "S/N CLINIC"]).not_())
         &
@@ -353,6 +349,10 @@ def preprocess():
     
     df = df.with_columns(
         (pl.col("OutcomeDate") - pl.col("IntakeDate")).dt.total_days().alias("TimeInShelterDays")
+    )
+
+    df = df.with_columns(
+        (pl.col("IntakeMonth").is_in([4,5,6,7,8])).alias("IsBusyMonth")
     )
     pantab.frame_to_hyper(df, "data/clean/cleaned_data.hyper", table="records")
 
