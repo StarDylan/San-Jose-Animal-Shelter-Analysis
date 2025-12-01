@@ -350,6 +350,10 @@ def preprocess():
     df = df.with_columns(
         (pl.col("OutcomeDate") - pl.col("IntakeDate")).dt.total_days().alias("TimeInShelterDays")
     )
+
+    df = df.with_columns(
+        (pl.col("IntakeMonth").is_in([4,5,6,7,8])).alias("IsBusyMonth")
+    )
     pantab.frame_to_hyper(df, "data/clean/cleaned_data.hyper", table="records")
 
     # print_missing_values(df)

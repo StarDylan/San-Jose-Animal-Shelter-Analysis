@@ -57,7 +57,10 @@ def eval():
    
     predictions = {}
     probabilities = {}
-    models = [random_forest()]
+    models = [
+        random_forest(),
+        hist_gradient_boosting(),
+    ]
 
     for model, name in models:
         print(f"Evaluating model: {name}")
@@ -83,13 +86,13 @@ def eval():
 
     # --- SHAP analysis for the Random Forest regressor ---
     # Use the trained pipeline (first model) and compute SHAP values on the test set
-    pipeline = models[0][0]
+    pipeline = models[1][0]
     rf = pipeline.named_steps["classifier"]
 
     # Transform features via the pipeline preprocessor. Handle sparse outputs.
     X_trans = pipeline.named_steps["preprocessor"].transform(X_test)
 
-    X_preprocessed = np.asarray(X_trans.toarray(), dtype=np.float64)
+    X_preprocessed = np.asarray(X_trans, dtype=np.float64)
 
     feature_names = pipeline.named_steps["preprocessor"].get_feature_names_out()
 
@@ -200,6 +203,138 @@ def random_forest():
         ('classifier', RandomForestRegressor())
     ])
     return (model, "Random Forest Regressor")
+
+
+def random_forest_no_external():
+
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+
+    categorical_features = [
+        "IntakeType",
+        # "PrimaryBreed",
+        # "PrimaryColor",
+        # "SecondaryColor",
+        # "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+    ])
+
+    # Preprocessing for categorical data
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    # Combine both types of preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)
+        ])
+
+    # Full pipeline including the model
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestRegressor())
+    ])
+    return (model, "Random Forest Regressor")
+
+from sklearn.linear_model import Ridge
+
+def ridge_regression():
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+
+    categorical_features = [
+        "IntakeType",
+        "PrimaryBreed",
+        "PrimaryColor",
+        "SecondaryColor",
+        "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler()),
+    ])
+
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features),
+        ]
+    )
+
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        # keep the name "classifier" so your SHAP code still works
+        ('classifier', Ridge(alpha=1.0)),
+    ])
+
+    return model, "Ridge Regression"
+
+
+from sklearn.ensemble import HistGradientBoostingRegressor
+def hist_gradient_boosting():
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+
+    categorical_features = [
+        "IntakeType",
+        "PrimaryBreed",
+        "PrimaryColor",
+        "SecondaryColor",
+        "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+    ])
+
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        # IMPORTANT: dense output here
+        # If you're on an older sklearn, change sparse_output=False -> sparse=False
+        ('onehot', OneHotEncoder(handle_unknown='ignore', sparse_output=False)),
+    ])
+
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features),
+        ],
+        # Force dense even if any transformer is sparse
+        sparse_threshold=0.0,
+    )
+
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', HistGradientBoostingRegressor(
+            max_depth=None,
+            learning_rate=0.05,
+            max_iter=300,
+        )),
+    ])
+
+    return model, "HistGradientBoosting Regressor"
+
 
 if __name__ == "__main__":
     eval()

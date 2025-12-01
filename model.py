@@ -3,12 +3,16 @@ import polars as pl
 from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, RandomizedSearchCV
 from sklearn.metrics import accuracy_score
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from imblearn.ensemble import BalancedBaggingClassifier
+
+
+from sklearn.metrics import classification_report
 
 from eval_utils import print_report, plot_roc_curves, plot_pr_curves
 
@@ -26,7 +30,7 @@ import joblib
 
 # pyright: reportUnknownMemberType=none
 
-def eval():
+def get_data():
     df = pl.read_parquet("data/clean/cleaned_data.parquet")
 
     df = df.filter(pl.col("OutcomeType") != "FOSTER") # Remove foster outcomes, since they are temporary
@@ -45,12 +49,16 @@ def eval():
     ]).to_pandas()
 
     y = (df.select("OutcomeType") == "ADOPTION").cast(pl.Int8).to_numpy().ravel()
+    return X, y
+
+def eval():
+    X, y = get_data()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
    
     predictions = {}
     probabilities = {}
-    models = [random_forest(), dummy_model(), gradient_boosting(), logistic_regression()]
+    models = [random_forest(), dummy_model(), random_forest_no_external(), balanced_bagging_classifier(), logistic_regression()]
 
     for model, name in models:
         _ = model.fit(X_train, y_train)
@@ -166,6 +174,85 @@ def random_forest():
     ]
     categorical_features = [
         "IntakeType",
+        # "PrimaryBreed",
+        # "PrimaryColor",
+        # "SecondaryColor",
+        # "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+    ])
+
+    # Preprocessing for categorical data
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    # Combine both types of preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)
+        ])
+
+    # Full pipeline including the model
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestClassifier())
+    ])
+    return (model, "Random Forest Classifier")
+
+def random_forest_no_external():
+
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+    categorical_features = [
+        "IntakeType",
+        # "PrimaryBreed",
+        # "PrimaryColor",
+        # "SecondaryColor",
+        # "IntakeIsNursing",
+    ]
+
+    numeric_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='median')),
+    ])
+
+    # Preprocessing for categorical data
+    categorical_transformer = Pipeline(steps=[
+        ('imputer', SimpleImputer(strategy='most_frequent')),
+        ('onehot', OneHotEncoder(handle_unknown='ignore'))
+    ])
+
+    # Combine both types of preprocessing
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ('num', numeric_transformer, numeric_features),
+            ('cat', categorical_transformer, categorical_features)
+        ])
+
+    # Full pipeline including the model
+    model = Pipeline(steps=[
+        ('preprocessor', preprocessor),
+        ('classifier', RandomForestClassifier())
+    ])
+    return (model, "Random Forest Classifier without External Features")
+
+
+def balanced_bagging_classifier():
+
+    numeric_features = [
+        "AgeDays",
+        "IntakeMonth",
+        "IntakeMedicalIssueIndex",
+    ]
+    categorical_features = [
+        "IntakeType",
         "PrimaryBreed",
         "PrimaryColor",
         "SecondaryColor",
@@ -192,9 +279,49 @@ def random_forest():
     # Full pipeline including the model
     model = Pipeline(steps=[
         ('preprocessor', preprocessor),
-        ('classifier', RandomForestClassifier())
+        ('classifier', BalancedBaggingClassifier())
     ])
-    return (model, "Random Forest Classifier")
+    return (model, "Balanced Bagging Classifier")
+
+
+def do_grid_search():
+    X, y = get_data()
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+    # Get your pipeline and name
+    model, name = random_forest()
+
+    # Define a **small, quick** grid
+    param_grid = {
+        "classifier__n_estimators": [100, 200, 300, 500, 800],
+        "classifier__max_depth": [None, 5, 10, 20, 30, 50],
+        "classifier__min_samples_split": [2, 5, 10, 20],
+        "classifier__min_samples_leaf": [1, 2, 4, 8],
+        "classifier__bootstrap": [True, False],
+        "classifier__max_features": ["auto", "sqrt", "log2"],
+    }
+
+    # GridSearch setup
+    grid_search = RandomizedSearchCV(
+        estimator=model,
+        param_distributions=param_grid,
+        cv=3,
+        n_iter=100,
+        scoring="f1",
+        verbose=10,
+    )
+
+    # Fit
+    grid_search.fit(X_train, y_train)
+
+    print("Best Params:", grid_search.best_params_)
+    print("Best CV Score:", grid_search.best_score_)
+
+    # Evaluate on test set
+    y_pred = grid_search.predict(X_test)
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
 
 
 def gradient_boosting():
@@ -288,3 +415,4 @@ def dummy_model():
 
 if __name__ == "__main__":
     eval()
+    do_grid_search()
