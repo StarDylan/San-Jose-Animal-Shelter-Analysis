@@ -8,13 +8,6 @@ from datetime import datetime, timedelta
 
 # pyright: reportUnknownMemberType=none
 
-
-# What is REHAB?
-# Time in shelter with IntakeReason == "IP ADOPT"
-
-
-import polars as pl
-
 # --- 1) Helpers ---------------------------------------------------------------
 
 def collapse_colors(col: pl.Expr) -> pl.Expr:
