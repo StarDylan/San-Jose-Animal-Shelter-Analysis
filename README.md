@@ -37,9 +37,9 @@ On binary classification. We achieved a precision of 0.73, recall of 0.70 and an
 
 See the confusion matrix, PR and ROC curves below:
 
-![](imgs\random_forest_confusion_matrix.png)
-![](imgs\pr-curve.png)
-![](imgs\roc-plot.png)
+![](imgs/random_forest_confusion_matrix.png)
+![](imgs/pr-curve.png)
+![](imgs/roc-plot.png)
 
 Below is the plot of permutation importance for each of
 the features:
@@ -83,14 +83,14 @@ We can clearly see how age would play into it, as cats will need to wait until t
 
 It's very hard to see how color impacts the time to adopt, even though the model says there are some correlations, its hard to see via inspection of the histograms for the 2 most common cats (black and tabby) and the lowest median adopt time (point).
 
-![](imgs\Hist%20Time%20in%20Shelter%20by%20Color.png)
+![](imgs/Hist%20Time%20in%20Shelter%20by%20Color.png)
 
 ## Case Studies
 
 We can use the SHAP waterfall plots to see what factors are important for making a certain decision.
 
 Below, we can see the model accurately determining this cat will not be adopted, due primariliy to its severe injuries (medical issue index of 3) and being relatively young (harder for a cat to recover).
-![](imgs\shap_force_plot_3.png)
+![](imgs/shap_force_plot_3.png)
 
 Here, we see a much more challenging case, where there is likely much irreducible error, since this is a super common case of cat (very likely color, age, month, etc.). This is probably down to the temperment of the cat, which we don't have access to in this dataset. So the model makes a poor decision and says this cat is not likely to be adopted, even though it did end up being adopted. This shows the weak points of how cats without any clear features are hard to predict for, as opposed to the severe medical case.
-![](imgs\shap_force_plot_6.png)
+![](imgs/shap_force_plot_6.png)
