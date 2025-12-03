@@ -35,7 +35,7 @@ def eval():
 
     # Remove 11 negative time in shelter values
     # Only consider cats that are adopted.
-    df = df.filter((pl.col("OutcomeType") == "ADOPTION") &  (pl.col("TimeInShelterDays") >= 0))
+    df = df.filter((pl.col("OutcomeType") == "ADOPTION") &  (pl.col("TimeInShelterDays") >= 0) & (pl.col("TimeInShelterDays") <= 500))
 
     # Remove target values
     X = df.select([
@@ -75,7 +75,7 @@ def eval():
         print(f"{name} - MSE: {mse}, Explained Variance: {evs}")
 
     
-        rf_importances(models[0][0], models[0][1], X_test, y_test)
+    rf_importances(models[0][0], models[0][1], X_test, y_test)
 
     # Save the trained regression pipeline to disk for interactive use
     models_dir = "models"
@@ -158,7 +158,7 @@ def rf_importances(model, name, X_test, y_test):
     ax = importances.plot.box(vert=False, whis=10)
     ax.set_title("Permutation Importances for Time until Adoption")
     ax.axvline(x=0, color="k", linestyle="--")
-    ax.set_xlabel("Incrase in MSE")
+    ax.set_xlabel("Increase in MSE")
     ax.figure.tight_layout()
         
     # save to file

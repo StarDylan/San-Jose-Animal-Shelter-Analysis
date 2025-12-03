@@ -354,6 +354,9 @@ def preprocess():
     df = df.with_columns(
         (pl.col("IntakeMonth").is_in([4,5,6,7,8])).alias("IsBusyMonth")
     )
+    df = df.filter((pl.col("TimeInShelterDays") >= 0) & (pl.col("TimeInShelterDays") <= 500))
+
+
     pantab.frame_to_hyper(df, "data/clean/cleaned_data.hyper", table="records")
 
     # print_missing_values(df)

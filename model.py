@@ -4,7 +4,7 @@ from sklearn.dummy import DummyClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.model_selection import train_test_split, RandomizedSearchCV
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, confusion_matrix
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
@@ -46,6 +46,8 @@ def get_data():
         "SecondaryColor",
         "IntakeIsNursing",
         "IntakeMedicalIssueIndex",
+        "SpayedNeutered",
+        "Sex"
     ]).to_pandas()
 
     y = (df.select("OutcomeType") == "ADOPTION").cast(pl.Int8).to_numpy().ravel()
@@ -58,7 +60,7 @@ def eval():
    
     predictions = {}
     probabilities = {}
-    models = [random_forest(), dummy_model(), random_forest_no_external(), balanced_bagging_classifier(), logistic_regression()]
+    models = [random_forest(), dummy_model(), logistic_regression()]
 
     for model, name in models:
         _ = model.fit(X_train, y_train)
@@ -85,6 +87,18 @@ def eval():
 
     print("See rf_permutation_importance.png for feature importances.")
 
+    cm = confusion_matrix(y_test, predictions[models[0][1]])
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+
+    fig, ax = plt.subplots()
+    disp.plot(ax=ax)
+    ax.set_title("Confusion Matrix of Adoption Classification")
+    fig.tight_layout()
+
+    output_path = "random_forest_confusion_matrix.png"
+    fig.savefig(output_path)
+    plt.close(fig)
+
     pipeline = models[0][0]
 
     # Save the trained classification pipeline to disk for interactive use
@@ -94,7 +108,7 @@ def eval():
     joblib.dump(pipeline, clf_path)
     print(f"Saved classification pipeline to: {clf_path}")
 
-    X_preprocessed = np.asarray(pipeline.named_steps["preprocessor"].transform(X).toarray(), dtype=np.float64)
+    X_preprocessed = np.asarray(pipeline.named_steps["preprocessor"].transform(X), dtype=np.float64)
 
     feature_names = (
         pipeline.named_steps["preprocessor"]
@@ -174,10 +188,12 @@ def random_forest():
     ]
     categorical_features = [
         "IntakeType",
-        # "PrimaryBreed",
-        # "PrimaryColor",
-        # "SecondaryColor",
-        # "IntakeIsNursing",
+        "SpayedNeutered",
+        "PrimaryBreed",
+        "PrimaryColor",
+        "SecondaryColor",
+        "IntakeIsNursing",
+        "Sex",
     ]
 
     numeric_transformer = Pipeline(steps=[
